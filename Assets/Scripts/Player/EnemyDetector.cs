@@ -8,9 +8,6 @@ public class EnemyDetector : MonoBehaviour
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private float _detectionRange = 5f;
 
-    [Header("Player Stack Settings")]
-    [SerializeField] PlayerStack playerStack;
-
     [Header("Events")]
     public UnityEvent OnEnemyDetected;
 
@@ -34,7 +31,7 @@ public class EnemyDetector : MonoBehaviour
         OnEnemyDetected?.Invoke();
         enemy.GetComponent<EnemyController>().TakePunch();
         yield return new WaitForSeconds(1f);
-        playerStack.StackCharacter(enemy.transform);
+        PlayerStack.Instance.StackEnemy(enemy.transform);
         _isEnemyDetected = false;
     }
 

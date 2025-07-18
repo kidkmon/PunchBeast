@@ -60,19 +60,20 @@ public class PlayerStack : Singleton<PlayerStack>
 
     #region  Public Methods
 
-    public void StackCharacter(Transform character)
+    public void StackEnemy(Transform enemy)
     {
         if (_stackedEnemies.Count >= _stackCapacity)
         {
-            Debug.Log("Pilha cheia!");
+            Debug.Log("Full Stack!");
             return;
         }
 
-        character.GetComponent<EnemyController>().SetRagdollEnabled(false, false);
-        character.tag = "Untagged";
-        character.gameObject.layer = _stackLayer;
+        enemy.GetComponent<EnemyController>().SetRagdollEnabled(false, false);
+        enemy.tag = "Untagged";
+        enemy.gameObject.layer = _stackLayer;
 
-        _stackedEnemies.Add(character);
+        _stackedEnemies.Add(enemy);
+        WalletSystem.Instance.AddMoney(1);
     }
 
     public void ClearStack()
