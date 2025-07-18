@@ -23,5 +23,6 @@ public class PlayerAttack : MonoBehaviour
     public void Attack()
     {
         _animator.SetTrigger(_animIDPunch);
+        AudioManager.Instance.PlayPunchSound();
     }
 }

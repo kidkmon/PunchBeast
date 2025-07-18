@@ -34,6 +34,7 @@ public class GameManager : Singleton<GameManager>
     public void EndGame()
     {
         GameStarted = false;
+        AudioManager.Instance.PlayWinSound();
     }
 
     public void RemoveUpgradeArea()
