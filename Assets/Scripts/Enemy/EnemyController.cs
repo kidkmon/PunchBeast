@@ -6,11 +6,14 @@ public class EnemyController : MonoBehaviour
     private Rigidbody[] _ragdollRigidbodies;
     private Collider[] _ragdollColliders;
 
+    private EnemyMovement _enemyMovement;
+
     void Awake()
     {
         _animator = GetComponent<Animator>();
         _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
         _ragdollColliders = GetComponentsInChildren<Collider>();
+        _enemyMovement = GetComponent<EnemyMovement>();
 
         SetRagdollEnabled(false, true);
     }
@@ -25,6 +28,7 @@ public class EnemyController : MonoBehaviour
         if (IsAttackable())
         {
             SetRagdollEnabled(true, false);
+            _enemyMovement.StopMovement();
         }
     }
     

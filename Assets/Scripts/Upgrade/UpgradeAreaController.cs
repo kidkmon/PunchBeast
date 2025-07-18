@@ -9,13 +9,15 @@ public class UpgradeAreaController : MonoBehaviour
     [SerializeField] private float _timeToUpgrade = 2f;
 
     [Header("Upgrade References")]
-    [SerializeField] private Image _fillBorderBackground;
+    [SerializeField] private TextMeshProUGUI _bagCapacityText;
     [SerializeField] private TextMeshProUGUI _costText;
+    [SerializeField] private Image _fillBorderBackground;
 
     private float _stayTime;
 
     void Start()
     {
+        _bagCapacityText.text = _upgradeBagConfig.BagCapacity.ToString();
         _costText.text = _upgradeBagConfig.UpgradeCost.ToString();
         _fillBorderBackground.fillAmount = 0f;
     }
