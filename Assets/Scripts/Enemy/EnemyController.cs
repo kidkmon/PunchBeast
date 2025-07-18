@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
         if (IsAttackable())
         {
             SetRagdollEnabled(true, false);
-            _enemyMovement.StopMovement();
+            _enemyMovement.SetMovement(false);
         }
     }
     

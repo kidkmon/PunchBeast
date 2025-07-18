@@ -46,9 +46,10 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void StopMovement()
+    public void SetMovement(bool isMoving)
     {
-        _isMoving = false;
+        _isMoving = isMoving;
         _animator.SetBool("isMoving", _isMoving);
     }
+
 }

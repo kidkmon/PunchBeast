@@ -62,6 +62,7 @@ public class UpgradeAreaController : MonoBehaviour
         PlayerStack.Instance.RemoveEnemies(_upgradeBagConfig.UpgradeCost);
         PlayerBag.Instance.UpgradeBag(_upgradeBagConfig);
         GameManager.Instance.RemoveUpgradeArea();
+        AudioManager.Instance.PlayUpgradeSound();
 
         Destroy(gameObject);
     }

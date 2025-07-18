@@ -5,7 +5,7 @@ public class GameManager : Singleton<GameManager>
     [Header("Game Settings")]
     [SerializeField] private GameObject _upgradablesArea;
 
-    public bool GameStarted = false;
+    public bool GameStarted { get; private set; }
 
     private int _currentAvailableUpgradeAreas;
 
@@ -34,7 +34,6 @@ public class GameManager : Singleton<GameManager>
     public void EndGame()
     {
         GameStarted = false;
-        AudioManager.Instance.PlayWinSound();
     }
 
     public void RemoveUpgradeArea()
