@@ -3,13 +3,18 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private Animator _animator;
+    private Rigidbody[] _ragdollRigidbodies;
+    private Collider[] _ragdollColliders;
 
     void Awake()
     {
         _animator = GetComponent<Animator>();
-        _animator.enabled = true;
+        _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
+        _ragdollColliders = GetComponentsInChildren<Collider>();
+
+        SetRagdollEnabled(false, true);
     }
-    
+
     public bool IsAttackable()
     {
         return _animator != null && _animator.enabled;
@@ -19,9 +24,23 @@ public class EnemyController : MonoBehaviour
     {
         if (IsAttackable())
         {
-            _animator.SetTrigger("Stop");
-            _animator.enabled = false;
+            SetRagdollEnabled(true, false);
         }
     }
+    
+    public void SetRagdollEnabled(bool isEnabled, bool enableAnimator)
+    {
+        _ragdollRigidbodies[0].isKinematic = isEnabled;
+        _ragdollColliders[0].enabled = !isEnabled;
+        _animator.enabled = enableAnimator;
 
+        for (int i = 1; i < _ragdollRigidbodies.Length; i++)
+        {
+            _ragdollRigidbodies[i].isKinematic = !isEnabled;
+        }
+        for (int i = 1; i < _ragdollColliders.Length; i++)
+        {
+            _ragdollColliders[i].enabled = isEnabled;
+        }
+    }
 }
