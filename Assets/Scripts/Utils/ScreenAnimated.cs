@@ -11,7 +11,6 @@ public class ScreenAnimated : MonoBehaviour
 
     [Header("Fade")]
     [SerializeField] private float _fadeInTime = 0.3f;
-    [SerializeField] private float _fadeOutTime = 0.6f;
 
     private CanvasGroup _canvasGroup;
     private Vector3 _leftOffscreen;
@@ -47,8 +46,6 @@ public class ScreenAnimated : MonoBehaviour
         seq.Append(_transform.DOAnchorPos(_center, _returnDuration).SetEase(Ease.OutBack));
         seq.Join(_transform.DOScale(1.3f, _returnDuration).SetEase(Ease.OutExpo));
         seq.AppendInterval(_delay);
-        seq.Join(_canvasGroup.DOFade(0f, _fadeOutTime));
-        seq.AppendInterval(_delay);
-        seq.OnComplete(() => { });
+        seq.OnComplete(() => {  });
     }
 }

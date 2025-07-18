@@ -1,21 +1,17 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
     [Header("Game Settings")]
     [SerializeField] private GameObject _upgradablesArea;
 
-    public bool GameStarted { get; private set; } = false;
+    public bool GameStarted = false;
 
     private int _currentAvailableUpgradeAreas;
-    void Awake()
-    {
-        GameStarted = false;
-    }
 
     void Start()
     {
+        GameStarted = false;
         _currentAvailableUpgradeAreas = _upgradablesArea.transform.childCount;
         WalletSystem.Instance.Initialize();
         PlayerBag.Instance.Initialize();
@@ -25,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (_currentAvailableUpgradeAreas <= 0 && GameStarted)
         {
-            GameStarted = false;
+            EndGame();
             HUDManager.Instance.ShowEndScreen();
         }
     }
@@ -37,7 +33,7 @@ public class GameManager : Singleton<GameManager>
 
     public void EndGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameStarted = false;
     }
 
     public void RemoveUpgradeArea()

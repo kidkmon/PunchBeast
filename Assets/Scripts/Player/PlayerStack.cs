@@ -17,7 +17,7 @@ public class PlayerStack : Singleton<PlayerStack>
     private Transform _currentStackedEnemy;
     private Vector3 _targetPosition;
 
-    void Awake()
+    void Start()
     {
         _stackedEnemies = new List<Transform>();
         _stackLayer = LayerMask.NameToLayer(_stackLayerName);
