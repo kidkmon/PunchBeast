@@ -76,13 +76,17 @@ public class PlayerStack : Singleton<PlayerStack>
         WalletSystem.Instance.AddMoney(1);
     }
 
-    public void ClearStack()
+    public void RemoveEnemies(int quantity)
     {
-        foreach (var t in _stackedEnemies)
+        if (quantity <= 0 || _stackedEnemies.Count == 0) return;
+
+        int removeCount = Mathf.Min(quantity, _stackedEnemies.Count);
+        for (int i = 0; i < removeCount; i++)
         {
-            Destroy(t.gameObject);
+            Transform enemyToRemove = _stackedEnemies[_stackedEnemies.Count - 1];
+            Destroy(enemyToRemove.gameObject);
+            _stackedEnemies.RemoveAt(_stackedEnemies.Count - 1);
         }
-        _stackedEnemies.Clear();
     }
 
     public int StackCapacity => _stackCapacity;
