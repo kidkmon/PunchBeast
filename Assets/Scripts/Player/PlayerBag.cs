@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerBag : Singleton<PlayerBag>
 {
@@ -6,12 +7,13 @@ public class PlayerBag : Singleton<PlayerBag>
     [SerializeField] private BagAssetConfig _starterBagConfig;
     [SerializeField] private Material _bagMaterial;
 
+    [HideInInspector] public UnityEvent<int> OnBagUpdated;
     private BagAssetConfig _currentBagConfig;
 
-    void Awake()
+    public void Initialize()
     {
         _currentBagConfig = _starterBagConfig;
-        UpdateBagVisuals();
+        UpgradeBag(_currentBagConfig);
     }
 
     void UpdateBagVisuals()
@@ -32,6 +34,7 @@ public class PlayerBag : Singleton<PlayerBag>
 
         _currentBagConfig = newBagConfig;
         UpdateBagVisuals();
+        OnBagUpdated?.Invoke(_currentBagConfig.BagCapacity);
     }
 
     #endregion

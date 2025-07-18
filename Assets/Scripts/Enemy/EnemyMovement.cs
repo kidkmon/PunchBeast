@@ -29,7 +29,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        if (!_isMoving) return;
+        if (!_isMoving || !GameManager.Instance.GameStarted) return;
 
         MoveTowardsTarget();
     }

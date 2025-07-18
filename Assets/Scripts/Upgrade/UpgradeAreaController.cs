@@ -56,11 +56,13 @@ public class UpgradeAreaController : MonoBehaviour
     void UpgradePlayerBag()
     {
         _stayTime = 0f;
-        gameObject.SetActive(false);
 
         if (PlayerStack.Instance.StackedEnemies <= 0) return;
 
         PlayerStack.Instance.RemoveEnemies(_upgradeBagConfig.UpgradeCost);
         PlayerBag.Instance.UpgradeBag(_upgradeBagConfig);
+        GameManager.Instance.RemoveUpgradeArea();
+
+        Destroy(gameObject);
     }
 }

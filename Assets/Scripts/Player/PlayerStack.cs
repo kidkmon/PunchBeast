@@ -63,7 +63,7 @@ public class PlayerStack : Singleton<PlayerStack>
     {
         if (_stackedEnemies.Count >= PlayerBag.Instance.BagCapacity)
         {
-            Debug.Log("Full Stack!");
+            ToastMessage.Instance.Show("Bag is full!\nUpgrade your bag to carry more enemies!");
             enemy.GetComponent<EnemyController>().SetRagdollEnabled(false, true);
             return;
         }
