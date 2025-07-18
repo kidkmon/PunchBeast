@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +5,7 @@ using UnityEngine.UI;
 public class UpgradeAreaController : MonoBehaviour
 {
     [Header("Upgrade Settings")]
-    [SerializeField] private int _upgradeCost;
+    [SerializeField] private BagAssetConfig _upgradeBagConfig;
     [SerializeField] private float _timeToUpgrade = 2f;
 
     [Header("Upgrade References")]
@@ -17,8 +16,8 @@ public class UpgradeAreaController : MonoBehaviour
 
     void Start()
     {
-        _costText.text = _upgradeCost.ToString();
-        _fillBorderBackground.fillAmount = 0f;  
+        _costText.text = _upgradeBagConfig.UpgradeCost.ToString();
+        _fillBorderBackground.fillAmount = 0f;
     }
 
     void OnTriggerStay(Collider other)
@@ -28,11 +27,17 @@ public class UpgradeAreaController : MonoBehaviour
             _stayTime += Time.deltaTime;
             _fillBorderBackground.fillAmount = _stayTime / _timeToUpgrade;
 
-            if (_stayTime >= _timeToUpgrade && WalletSystem.Instance.TryDeductMoney(_upgradeCost))
+            if (_stayTime >= _timeToUpgrade)
             {
-                UpgradePlayer();
-                _stayTime = 0f;
-                gameObject.SetActive(false);
+                if (WalletSystem.Instance.TryDeductMoney(_upgradeBagConfig.UpgradeCost))
+                {
+                    UpgradePlayerBag();
+                }
+                else
+                {
+                    ToastMessage.Instance.Show("Not enough money to upgrade!\nPunch more Enemies!");
+                }
+
             }
         }
     }
@@ -46,10 +51,14 @@ public class UpgradeAreaController : MonoBehaviour
         }
     }
 
-    void UpgradePlayer()
+    void UpgradePlayerBag()
     {
-        if (PlayerStack.Instance.StackCapacity <= 0) return;
+        _stayTime = 0f;
+        gameObject.SetActive(false);
 
-        PlayerStack.Instance.RemoveEnemies(_upgradeCost);
+        if (PlayerStack.Instance.StackedEnemies <= 0) return;
+
+        PlayerStack.Instance.RemoveEnemies(_upgradeBagConfig.UpgradeCost);
+        PlayerBag.Instance.UpgradeBag(_upgradeBagConfig);
     }
 }

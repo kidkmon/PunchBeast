@@ -6,7 +6,6 @@ public class PlayerStack : Singleton<PlayerStack>
     [Header("Stack Settings")]
     [SerializeField] private Transform _stackBag;
     [SerializeField] private string _stackLayerName = "Stack";
-    [SerializeField] private int _stackCapacity = 5;
     [SerializeField] private float _stackHeightOffset = 1f;
     [SerializeField] private float _moveThreshold = 0.01f;
     [SerializeField] private float _inertiaSpeed = 8f;
@@ -62,9 +61,10 @@ public class PlayerStack : Singleton<PlayerStack>
 
     public void StackEnemy(Transform enemy)
     {
-        if (_stackedEnemies.Count >= _stackCapacity)
+        if (_stackedEnemies.Count >= PlayerBag.Instance.BagCapacity)
         {
             Debug.Log("Full Stack!");
+            enemy.GetComponent<EnemyController>().SetRagdollEnabled(false, true);
             return;
         }
 
@@ -89,12 +89,7 @@ public class PlayerStack : Singleton<PlayerStack>
         }
     }
 
-    public int StackCapacity => _stackCapacity;
-
-    public void SetStackCapacity(int capacity)
-    {
-        _stackCapacity = capacity;
-    }
+    public int StackedEnemies => _stackedEnemies.Count;
     
     #endregion
 }
